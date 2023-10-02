@@ -1,0 +1,43 @@
+# General
+**/build-details.properties
+classes/
+eclipse-classes/
+.classpath
+.project
+.settings/
+target/
+*.lst
+*.orig
+*.mine
+generated/
+*.log
+*.gz
+
+# Intellij
+.idea/
+*.swp
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+*.code-workspace
+.factorypath
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Node
+node_modules/
+build/
+dist/
+
+# Hugo
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# OS 
+Session.vim
+.DS_Store
