@@ -14,6 +14,8 @@ description: "onlyteo"
 # website images for Open Graph and Twitter Cards
 images:
   - "/onlyteo.png"
+custom_css:
+  - "/css/custom.css"
 
 # Header config
 header:
@@ -40,17 +42,17 @@ footer:
   # Custom content (HTML format is supported)
   custom: ""
   # whether to show Hugo and theme info
-  hugo: true
+  hugo: false
   # whether to show copyright info
   copyright: true
   # whether to show the author
   author: true
   # site creation time
-  since: 2015
+  since: 2012
   # ICP info only in China (HTML format is supported)
   icp: ""
   # license info (HTML format is supported)
-  license: '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+  license: '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"><i class="fa-brands fa-creative-commons"></i><i class="fa-brands fa-creative-commons-by"></i><i class="fa-brands fa-creative-commons-nc-eu"></i></a>'
 
 # Section (all posts) page config
 section:
@@ -311,34 +313,12 @@ typeit:
   # cursor duration after typing finishing (measured in milliseconds, "-1" means unlimited)
   duration: -1
 
-# Site verification code for Google/Bing/Yandex/Pinterest/Baidu
-verification:
-  google: ""
-  bing: ""
-  yandex: ""
-  pinterest: ""
-  baidu: ""
-
 # Site SEO config
 seo:
   # image URL
   image: "/images/Apple-Devices-Preview.png"
   # thumbnail URL
   thumbnailUrl: "/images/screenshot.png"
-
-# Analytics config
-analytics:
-  enable: false
-  # Google Analytics
-  google:
-    id: ""
-    # whether to anonymize IP
-    anonymizeIP: true
-  # Fathom Analytics
-  fathom:
-    id: ""
-    # server url for your tracker if you're self hosting
-    server: ""
 
 # Cookie consent config
 cookieconsent:

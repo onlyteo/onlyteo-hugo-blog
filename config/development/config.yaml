@@ -1,1 +1,26 @@
+# Site base URL
 baseURL: 'http://localhost:1313'
+
+# Params
+params:
+  # Analytics config
+  analytics:
+    enable: false
+    # Google Analytics
+    google:
+      id: ""
+      # whether to anonymize IP
+      anonymizeIP: true
+    # Fathom Analytics
+    fathom:
+      id: ""
+      # server url for your tracker if you're self hosting
+      server: ""
+
+  # Site verification code for Google/Bing/Yandex/Pinterest/Baidu
+  verification:
+    google: "" # Not needed. Uses domain name verification
+    bing: ""
+    yandex: ""
+    pinterest: ""
+    baidu: ""

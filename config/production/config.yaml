@@ -1,1 +1,26 @@
-baseURL: 'http://blog.onlyteo.com'
+# Site base URL
+baseURL: 'http://onlyteo.com'
+
+# Params
+params:
+  # Analytics config
+  analytics:
+    enable: true
+    # Google Analytics
+    google:
+      id: "G-V1RDG69332"
+      # whether to anonymize IP
+      anonymizeIP: true
+    # Fathom Analytics
+    fathom:
+      id: ""
+      # server url for your tracker if you're self hosting
+      server: ""
+
+  # Site verification code for Google/Bing/Yandex/Pinterest/Baidu
+  verification:
+    google: "" # Not needed. Uses domain name verification
+    bing: ""
+    yandex: ""
+    pinterest: ""
+    baidu: ""

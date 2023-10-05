@@ -70,6 +70,7 @@ sitemap:
 # Permalinks config (https://gohugo.io/content-management/urls/#permalinks)
 permalinks:
   # posts: ":year/:month/:filename"
+  pages: ":filename"
   posts: ":filename"
 
 # Privacy config (https://gohugo.io/about/hugo-and-gdpr/)
