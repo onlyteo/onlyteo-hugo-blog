@@ -42,3 +42,27 @@
     font-size: .8rem;
     vertical-align: middle;
 }
+
+.single .post-meta span {
+    margin-right: .5rem;
+}
+
+.single .post-meta .fas,.far {
+    margin-right: .15rem;
+}
+
+.content .author .author-profile {
+    display: flex;
+}
+
+.content .author .author-profile .author-socials {
+    white-space: nowrap;
+}
+
+.content .author .author-profile .author-socials .fa-solid,.fa-brands  {
+    margin-right: .3rem;
+}
+
+.content .authors .author .fa-solid  {
+    margin-right: .3rem;
+}

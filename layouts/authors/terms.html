@@ -1,0 +1,27 @@
+{{- define "title" -}}
+{{ T .Data.Plural | default .Data.Plural }} - {{ .Site.Title -}}
+{{- end -}}
+
+{{- define "content" -}}
+<div class="page archive">
+    {{- /* Title */ -}}
+    <h1 class="single-title animate__animated animate__pulse animate__faster">
+        {{ T .Data.Plural | default .Data.Plural }}
+    </h1>
+
+    {{- /* Content */ -}}
+    <div id="content" class="content">
+        <div class="authors">
+            {{- range .Data.Pages -}}
+            {{- if ne .Params.hidden true -}}
+            <div class="author">
+                {{- $options := dict "Class" "author" "Destination" .Permalink "Title" "Author" "Rel" "author" "Icon"
+                (dict "Class" "fa-solid fa-user-circle") "Content" .Params.name -}}
+                {{- partial "plugin/a.html" $options -}}
+            </div>
+            {{- end -}}
+            {{- end -}}
+        </div>
+    </div>
+</div>
+{{- end -}}

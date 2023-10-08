@@ -1,0 +1,86 @@
+{{- define "title" -}}
+{{- .Params.name }} - {{ T .Data.Singular | default .Data.Singular }} - {{ .Site.Title -}}
+{{- end -}}
+
+{{- define "content" -}}
+<div class="page archive">
+    {{- /* Title */ -}}
+    <h2 class="single-title animate__animated animate__pulse animate__faster">
+        {{ .Params.name }}
+    </h2>
+
+    {{- /* Content */ -}}
+    <div id="content" class="content">
+        <div class="author">
+            <div class="author-profile">
+                <div class="author-details">
+                    <img src="{{ .Params.photo }}" alt="{{ .Params.name }}" />
+                    <p>
+                        {{ .Content }}
+                    </p>
+                </div>
+
+                <div class="author-socials">
+                    {{- with .Params.social.email -}}
+                    {{- $handle := (print "" .) -}}
+                    {{- $url := (print "mailto:" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}">
+                            <i class="fa-solid fa-envelope"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                    {{- with .Params.social.twitter -}}
+                    {{- $handle := (print "@" .) -}}
+                    {{- $url := (print "https://twitter.com/" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-brands fa-twitter"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                    {{- with .Params.social.facebook -}}
+                    {{- $handle := (print "" .) -}}
+                    {{- $url := (print "https://facebook.com/" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-brands fa-facebook"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                    {{- with .Params.social.bluesky -}}
+                    {{- $handle := (print "@" .) -}}
+                    {{- $url := (print "https://bsky.app/profile/" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-solid fa-cloud"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                    {{- with .Params.social.github -}}
+                    {{- $handle := (print "" .) -}}
+                    {{- $url := (print "https://github.com/" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-brands fa-github"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                </div>
+            </div>
+
+
+            <div class="author-posts">
+                <h2 class="single-subtitle">
+                    {{- .Params.Title | default (T "posts") -}}
+                </h2>
+                <ul>
+                    {{- range .Data.Pages -}}
+                    <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+                    {{- end -}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{{- end -}}

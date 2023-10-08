@@ -28,10 +28,16 @@ enableGitInfo: false
 enableEmoji: true
 
 # Author config
-author:
-  name: "onlyteo"
-  email: ""
-  link: ""
+#author:
+#  name: "onlyteo"
+#  email: ""
+#  link: ""
+
+# Taxonomies
+taxonomies:
+  author: authors
+  category: categories
+  tag: tags
 
 # Markup related configuration in Hugo
 markup:
