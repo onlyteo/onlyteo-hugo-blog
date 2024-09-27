@@ -39,21 +39,39 @@
                         </a>
                     </p>
                     {{- end -}}
+                    {{- with .Params.social.bluesky -}}
+                    {{- $handle := (print "@" .) -}}
+                    {{- $url := (print "https://bsky.app/profile/" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-brands fa-bluesky"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                    {{- with .Params.social.mastodon -}}
+                    {{- $handle := (print "@" .) -}}
+                    {{- $url := (print "https://mastodon.social/@" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-brands fa-mastodon"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
+                    {{- with .Params.social.threads -}}
+                    {{- $handle := (print "@" .) -}}
+                    {{- $url := (print "https://threads.net/@" .) -}}
+                    <p>
+                        <a class="social-link" href="{{ $url }}" target="_blank">
+                            <i class="fa-brands fa-threads"></i> {{- $handle -}}
+                        </a>
+                    </p>
+                    {{- end -}}
                     {{- with .Params.social.facebook -}}
                     {{- $handle := (print "" .) -}}
                     {{- $url := (print "https://facebook.com/" .) -}}
                     <p>
                         <a class="social-link" href="{{ $url }}" target="_blank">
                             <i class="fa-brands fa-facebook"></i> {{- $handle -}}
-                        </a>
-                    </p>
-                    {{- end -}}
-                    {{- with .Params.social.bluesky -}}
-                    {{- $handle := (print "@" .) -}}
-                    {{- $url := (print "https://bsky.app/profile/" .) -}}
-                    <p>
-                        <a class="social-link" href="{{ $url }}" target="_blank">
-                            <i class="fa-solid fa-cloud"></i> {{- $handle -}}
                         </a>
                     </p>
                     {{- end -}}
