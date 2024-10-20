@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main
-      - prototype/*
   # Runs on a schedule once a month
   schedule:
     - cron: "0 0 1 * *"
