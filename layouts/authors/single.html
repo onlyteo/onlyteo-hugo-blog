@@ -1,0 +1,39 @@
+{{ define "title" }}
+{{ .Params.name }} · {{ .Site.Title }}
+{{ end }}
+{{ define "content" }}
+<section class="container author">
+    <article>
+        <header class="author-header">
+            <h2 class="author-name">
+                <a class="author-link" href="{{ .Permalink | safeURL }}">
+                    {{ .Params.name }}
+                </a>
+            </h2>
+        </header>
+
+        <div class="author-content">
+            <div class="author-bio">
+                {{ .Content }}
+            </div>
+            <div class="author-details">
+                {{ partialCached "author/avatar.html" . }}
+                {{ partialCached "author/socials.html" . }}
+            </div>
+        </div>
+
+        <footer class="author-footer">
+            <div class="author-posts list">
+                <h4>Latest posts</h4>
+                {{ with .GetPage "posts" }}
+                <ul>
+                    {{ range last 5 .Pages }}
+                    {{- .Render "li-simple" -}}
+                    {{ end }}
+                </ul>
+                {{ end }}
+            </div>
+        </footer>
+    </article>
+</section>
+{{ end }}

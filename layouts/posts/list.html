@@ -1,19 +1,19 @@
 {{ define "title" }}
-  {{- i18n (lower .Name) | default .Name | title }} · {{ .Site.Title -}}
+  {{ title (i18n (lower .Title)) | default .Title }} · {{ .Site.Title }}
 {{ end }}
 {{ define "content" }}
-  <section class="container authors">
+  <section class="container posts">
     <header>
-      <h1 class="title">
+      <h2 class="title">
         <a class="title-link" href="{{ .Permalink | safeURL }}">
-          {{- i18n (lower .Title) | default .Title | title -}}
+          {{ title (i18n (lower .Title)) | default .Title }}
         </a>
-      </h1>
+      </h2>
     </header>
     {{ .Content }}
-    <div class="author-list list">
+    <div class="post-list list">
       <ul>
-        {{- range .Data.Pages -}}
+        {{- range .Paginator.Pages -}}
           {{- .Render "li" -}}
         {{- end -}}
       </ul>

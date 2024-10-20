@@ -1,110 +1,58 @@
-# theme
-theme: "LoveIt"
+theme: hugo-coder
 
-# website title
-title: "onlyteo"
+title: onlyteo
 
-# determines default content language ["en", "zh-cn", "fr", "pl", ...]
-defaultContentLanguage: "en"
-# language code ["en", "zh-CN", "fr", "pl", ...]
-languageCode: "en"
-# language name ["English", "简体中文", "Français", "Polski", ...]
-languageName: "English"
-# whether to include Chinese/Japanese/Korean
-hasCJKLanguage: false
+languageCode: en
+defaultContentLanguage: en
 
-# default amount of posts in each pages
-paginate: 12
-# google analytics code [UA-XXXXXXXX-X]
-googleAnalytics: ""
-# copyright description used only for seo schema
-copyright: ""
+paginate: 6
 
-# whether to use robots.txt
-enableRobotsTXT: true
-# whether to use git commit log
-enableGitInfo: false
-# whether to use emoji code
 enableEmoji: true
 
-# Author config
-#author:
-#  name: "onlyteo"
-#  email: ""
-#  link: ""
+# SERVICES
+services:
+  disqus: {}
 
-# Taxonomies
+# MARKUP
+markup:
+  highlight:
+    noClasses: false
+
+# PARAMS
+params:
+  logo: img/logo-40x40.png
+  description: Teo's tech blog
+  keywords: blog,developer,personal
+  dateFormat: January 2, 2006
+  since: 2012
+  commit: https://github.com/luizdepra/hugo-coder/tree/
+  rtl: false
+  colorScheme: auto
+  hideColorSchemeToggle: true
+  maxSeeAlsoItems: 5
+  customCSS:
+    - css/onlyteo.css
+  customSCSS: []
+  customJS: []
+  customRemoteJS: []
+
+# TAXONOMIES
 taxonomies:
-  author: authors
   category: categories
+  series: series
   tag: tags
 
-# Markup related configuration in Hugo
-markup:
-  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
-  highlight:
-    codeFences: true
-    guessSyntax: true
-    lineNos: true
-    lineNumbersInTable: true
-    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
-    noClasses: false
-  # Goldmark is from Hugo 0.60 the default library used for Markdown
-  goldmark:
-    extensions:
-      definitionList: true
-      footnote: true
-      linkify: true
-      strikethrough: true
-      table: true
-      taskList: true
-      typographer: true
-    renderer:
-      # whether to use HTML tags directly in the document
-      unsafe: true
-  # Table Of Contents settings
-  tableOfContents:
-    startLevel: 2
-    endLevel: 6
-
-# Sitemap config
-sitemap:
-  changefreq: "weekly"
-  filename: "sitemap.xml"
-  priority: 0.5
-
-# Permalinks config (https://gohugo.io/content-management/urls/#permalinks)
-permalinks:
-  # posts: ":year/:month/:filename"
-  pages: ":filename"
-  posts: ":filename"
-
-# Privacy config (https://gohugo.io/about/hugo-and-gdpr/)
-privacy:
-  # privacy of the Google Analytics (replaced by params.analytics.google)
-  googleAnalytics:
-    # ...
-  twitter:
-    enableDNT: true
-  youtube:
-    privacyEnhanced: true
-
-# Options to make output .md files
-mediaTypes:
-  text/plain:
-    suffixes: ["md"]
-
-# Options to make output .md files
-outputFormats:
-  MarkDown:
-    mediaType: "text/plain"
-    isPlainText: true
-    isHTML: false
-
-# Options to make hugo output files
-outputs:
-  home: ["HTML", "RSS", "JSON"]
-  page: ["HTML", "MarkDown"]
-  section: ["HTML", "RSS"]
-  taxonomy: ["HTML", "RSS"]
-  taxonomyTerm: ["HTML"]
+# LANGUAGES
+languages:
+  en:
+    languageName: ":us:"
+    menu:
+      main:
+        - weight: 1
+          name: Posts
+          url: posts/
+        - weight: 2
+          name: About
+          url: about/
+          params:
+            icon: fa-solid fa-circle-info

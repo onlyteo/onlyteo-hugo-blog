@@ -1,15 +1,15 @@
 ---
 draft: false
-metadata: false
+meta: false
 toc: false
-author: onlyteo
+featured: false
 date: 2023-10-01T19:24:46+02:00
 authors:
   - onlyteo
-categories:
-  - Announcements
 tags:
   - Announcement
+categories:
+  - Announcements
 title: "Welcome to the new onlyteo.com site!"
 ---
 

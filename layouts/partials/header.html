@@ -1,0 +1,36 @@
+<nav class="navigation">
+  <section class="container">
+    {{ with .Site }}
+    <a class="navigation-title" href="{{ absLangURL "" }}">
+      {{ .Title }}
+    </a>
+    {{ end }}
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle">
+      <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+    </label>
+    <ul class="navigation-list">
+      {{ with .Site.Menus.main}}
+        {{ range sort . }}
+          <li class="navigation-item">
+            {{ if .Params.icon }}
+              <a class="navigation-link {{ .Params.class }}" href="{{ index (apply (slice .URL) (.Params.urlFunc | default "relLangURL") ".") 0 }}">
+                <i class="{{ .Params.icon }}" aria-hidden="true"></i>
+              </a>
+            {{ else }}
+              <a class="navigation-link {{ .Params.class }}" href="{{ index (apply (slice .URL) (.Params.urlFunc | default "relLangURL") ".") 0 }}">{{ .Name }}</a>
+            {{ end }}
+          </li>
+          <li class="navigation-item menu-separator">
+            <span>|</span>
+          </li>
+        {{ end }}
+      {{ end }}
+      <li class="navigation-item">
+        <a id="dark-mode-toggle" class="navigation-link colorscheme-toggle">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </section>
+</nav>

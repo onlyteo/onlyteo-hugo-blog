@@ -1,8 +1,14 @@
 ---
 draft: true
 meta: true
-toc: true
+toc: false
+featured: false
 date: {{ .Date }}
-title: "{{ replace .Name "-" " " | title }}"
+authors: []
+tags: []
+categories: []
+series: []
+title: ""
+description: ""
+slug: ""
 ---
-
