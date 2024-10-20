@@ -1,0 +1,30 @@
+{{ $username := index (.Params.authors) 0 }}
+{{ $authorPage := printf "/authors/%s" $username }}
+{{ $category := index (.Params.categories) 0 }}
+{{ $categoryPage := printf "/categories/%s" $category }}
+<li>
+  <div class="post full">
+    <div class="post-title">
+      <a class="title" href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+    </div>
+    <div class="post-meta spaced">
+      {{ with .GetPage $categoryPage }}
+      <span class="post-category meta">
+        <a href="{{ .Permalink }}">
+          <i class="fa-regular fa-folder"></i>{{ $category }}
+        </a>
+      </span>
+      {{ end }}
+      {{ with .GetPage $authorPage }}
+      <span class="post-author meta">
+        <a href="{{ .Permalink }}">
+          <i class="fa-regular fa-user"></i>{{ .Params.name }}
+        </a>
+      </span>
+      {{ end }}
+      <span class="post-date meta">
+        <i class="fa-regular fa-calendar"></i>{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+      </span>
+    </div>
+  </div>
+</li>

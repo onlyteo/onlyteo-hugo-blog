@@ -1,0 +1,13 @@
+{{ with .GetPage "posts" }}
+{{ $posts := where .Pages "Params.featured" "eq" true }}
+{{ if gt ( $posts | len ) 0 }}
+<div class="featured list">
+    <h4>Featured</h4>
+    <ul>
+        {{ range $index, $post := $posts }}
+        {{- $post.Render "li-featured" -}}
+        {{ end }}
+    </ul>
+</div>
+{{ end }}
+{{ end }}

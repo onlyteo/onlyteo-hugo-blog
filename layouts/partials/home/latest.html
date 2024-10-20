@@ -1,0 +1,11 @@
+{{ with .GetPage "posts" }}
+{{ $posts := where .Pages "Params.featured" "ne" true }}
+<div class="latest-posts list">
+    <h4>Latest posts</h4>
+    <ul>
+        {{ range last 5 $posts }}
+        {{- .Render "li" -}}
+        {{ end }}
+    </ul>
+</div>
+{{ end }}

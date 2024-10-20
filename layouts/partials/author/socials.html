@@ -1,0 +1,19 @@
+{{ with .Params.socials }}
+<div class="author-socials socials list">
+    <ul>
+  {{ range sort . "weight" }}
+    {{ if .icon }}
+        <li>
+            <a class="meta" href="{{ .url | safeURL }}" aria-label="{{ .name }}" {{ if .rel }}rel="{{ .rel }}"{{ end }} {{ if .target }}target="{{ .target }}"{{ end }} {{ if .type }}type="{{ .type }}"{{ end }}>
+                <i class="{{ .icon }}" aria-hidden="true"></i> {{ .username }}
+            </a>
+        </li>
+       {{ else }}
+        <li>
+            <a class="meta" href="{{ .url | safeURL }}" aria-label="{{ .name }}" {{ if .rel }}rel="{{ .rel }}"{{ end }} {{ if .target }}target="{{ .target }}"{{ end }}>{{ .username }}</a>
+        </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+</div>
+{{ end }}

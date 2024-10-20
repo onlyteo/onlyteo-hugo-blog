@@ -1,0 +1,97 @@
+.wrapper a {
+    text-decoration: none;
+}
+
+.wrapper .list ul {
+    list-style: none;
+}
+
+body.colorscheme-light .wrapper a {
+    color: #212121;
+}
+
+body.colorscheme-light .wrapper a:hover, body.colorscheme-light .wrapper a:focus {
+    color: #1565c0;
+}
+
+body.colorscheme-dark .wrapper a {
+    color: #dadada;
+}
+
+body.colorscheme-dark .wrapper a:hover, body.colorscheme-light .wrapper a:focus {
+    color: #1565c0;
+}
+
+.navigation .navigation-title {
+    font-size: 3rem;
+    text-transform: none;
+}
+
+.navigation #dark-mode-toggle {
+    margin: 0 1rem;
+    font-size: inherit;
+    bottom: auto;
+    left: auto;
+    z-index: auto;
+    position: absolute;
+}
+
+.list .spaced {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list .simple, .list .full {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 0.4rem;
+}
+
+body.colorscheme-light .list .simple, body.colorscheme-light .list .full {
+    border: 1px solid #efecec;
+}
+
+body.colorscheme-dark .list .simple, body.colorscheme-dark .list .full {
+    border: 1px solid #2b2a2a;
+}
+
+.list .simple .title {
+    margin: 0;
+}
+
+.list .meta, .list .meta a {
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+.socials .fa-brands {
+    margin: 0 0.7rem;
+}
+
+.author .author-avatar img {
+    border-radius: 100%;
+}
+
+.author .author-content {
+    display: flex;
+}
+
+.author .author-bio {
+    float: left;
+    margin-right: 5rem;
+}
+
+.author .author-details {
+    float: right;
+    width: 30%;
+}
+
+body.colorscheme-light footer.footer {
+    font-size: 1.4rem;
+    color: #555555;
+}
+
+body.colorscheme-dark footer.footer {
+    font-size: 1.4rem;
+    color: #777777;
+}

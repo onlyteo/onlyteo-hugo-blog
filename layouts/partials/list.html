@@ -1,0 +1,23 @@
+<section class="container">
+    <header>
+        <h2 class="title">
+            <a class="title-link" href="{{ .Permalink | safeURL }}">
+                {{- i18n (lower .Title) | default .Title | title -}}
+            </a>
+        </h2>
+    </header>
+    {{ .Content }}
+    <div class="list">
+        <ul>
+            {{ range .Paginator.Pages }}
+            <li>
+                <div class="simple spaced">
+                    <a class="title" href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+                    <span class="date meta">{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</span>
+                </div>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+    {{ partial "pagination.html" . }}
+</section>
