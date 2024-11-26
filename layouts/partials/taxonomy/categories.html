@@ -1,0 +1,11 @@
+<div class="categories">
+  <i class="fa-regular fa-folder" aria-hidden="true"></i>
+  {{- range $index, $el := . -}}
+    {{- if gt $index 0 }}
+      <span class="separator">•</span>
+    {{- end }}
+    <span class="category">
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    </span>
+  {{- end -}}
+</div>

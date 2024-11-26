@@ -1,14 +1,10 @@
 {{ if and (isset .Params "avatar") (not (isset .Params "gravatar")) }}
-  {{ with .Resources.Get .Params.avatar }}
     <div class="author-avatar">
-        <img src="{{ .RelPermalink }}" alt="avatar">
+        <img src="{{ .Params.avatar | relURL }}" alt="avatar">
     </div>
-  {{ end }}
 {{ end }}
 {{ if and (isset .Params "gravatar") (not (isset .Params "avatar")) }}
-  {{ with .Params.gravatar }}
     <div class="author-avatar">
-        <img src="https://www.gravatar.com/avatar/{{md5 .}}?s=240&d=mp" alt="gravatar">
+        <img src="https://www.gravatar.com/avatar/{{md5 .Params.gravatar}}?s=240&d=mp" alt="gravatar">
     </div>
-  {{ end }}
 {{ end }}

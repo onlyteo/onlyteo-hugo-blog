@@ -1,6 +1,6 @@
----
-name: ""
-avatar: default.png
-tags: []
-socials: []
----
++++
+name = ""
+avatar = "default.png"
+tags = []
+socials = []
++++

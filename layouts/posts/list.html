@@ -4,11 +4,11 @@
 {{ define "content" }}
   <section class="container posts">
     <header>
-      <h2 class="title">
+      <h1 class="title">
         <a class="title-link" href="{{ .Permalink | safeURL }}">
           {{ title (i18n (lower .Title)) | default .Title }}
         </a>
-      </h2>
+      </h1>
     </header>
     {{ .Content }}
     <div class="post-list list">

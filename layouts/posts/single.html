@@ -10,8 +10,8 @@
       </header>
 
       <div class="post-content">
-        {{ if .Params.featuredImage }}
-          <img src="{{ .Params.featuredImage | relURL }}" alt="Featured image"/>
+        {{ if .Params.image }}
+          <img src="{{ .Params.image | relURL }}" alt="Featured Image"/>
         {{ end }}
         {{ .Content }}
       </div>

@@ -11,7 +11,7 @@
         <ul>
             {{ range .Paginator.Pages }}
             <li>
-                <div class="simple spaced">
+                <div class="compact spaced">
                     <a class="title" href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
                     <span class="date meta">{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</span>
                 </div>

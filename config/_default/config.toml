@@ -1,0 +1,54 @@
+title = "onlyteo"
+theme = "hugo-coder"
+languageCode = "en"
+defaultContentLanguage = "en"
+paginate = 6
+enableEmoji = true
+
+# SERVICES
+[services]
+disqus = { }
+
+# MARKUP
+[markup.highlight]
+noClasses = false
+
+# PARAMS
+[params]
+logo = "img/logo-40x40.png"
+description = "Teo's tech blog"
+keywords = "blog,developer,personal"
+dateFormat = "January 2, 2006"
+since = 2012
+commit = "https://github.com/luizdepra/hugo-coder/tree/"
+rtl = false
+colorScheme = "auto"
+hideColorSchemeToggle = true
+maxSeeAlsoItems = 5
+customCSS = ["css/onlyteo.css"]
+customSCSS = []
+customJS = []
+customRemoteJS = []
+
+# TAXONOMIES
+[taxonomies]
+category = "categories"
+series = "series"
+tag = "tags"
+
+# LANGUAGES
+[languages.en]
+languageName = ":us:"
+
+[[languages.en.menu.main]]
+weight = 1
+name = "Posts"
+url = "posts/"
+
+[[languages.en.menu.main]]
+weight = 2
+name = "About"
+url = "about/"
+
+[languages.en.menu.main.params]
+icon = "fa-solid fa-circle-info"

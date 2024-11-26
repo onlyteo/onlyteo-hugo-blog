@@ -1,0 +1,14 @@
+{{ $mainAuthor := index (.Params.authors) 0 }}
+{{ $mainCategory := index (.Params.categories) 0 }}
+<li>
+    <div class="post compact">
+        <div class="post-title">
+            <h4 class="title">
+                <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+            </h4>
+        </div>
+        <div class="post-meta">
+            <div class="date meta">{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</div>
+        </div>
+    </div>
+</li>

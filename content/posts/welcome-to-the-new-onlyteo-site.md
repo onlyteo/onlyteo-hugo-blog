@@ -1,25 +1,30 @@
----
-draft: false
-meta: false
-toc: false
-featured: false
-date: 2023-10-01T19:24:46+02:00
-authors:
-  - onlyteo
-tags:
-  - Announcement
-categories:
-  - Announcements
-title: "Welcome to the new onlyteo.com site!"
----
++++
+title = "Welcome to the new onlyteo.com site!"
+description = "The first post on the new and improved website."
+draft = false
+meta = false
+toc = false
+featured = false
+date = "2023-10-01T19:24:46+02:00"
+authors = [
+    "onlyteo"
+]
+tags = [
+    "Announcement",
+    "Blog"
+]
+categories = [
+    "Announcements"
+]
++++
 
-### New and improved
+## New and improved
 
 I haven't had a site running on [onlyteo.com](https://onlyteo.com) for a few years now. I have tried a few different blogging platforms, but most of them leave a lot to be desired. Especially when it comes to the maintenance and operational aspects of running the site.
 
 This time around I have decided to keep it as simple as possible. I'm using [Hugo](https://gohugo.io), which is a simple static site generator that allows me to write content in MarkDown. The whole site with its contents is versioned in a [GitHub](https://github.com) repository. Upon committing changes to the site it is build using [GitHub Actions](https://docs.github.com/en/actions) and deployed to [GitHub Pages](https://docs.github.com/en/pages). No database or other runtime components needed!
 
-### Which type of content
+## Which type of content
 
 What contents can you expect to see here? It will for the most part be the musings of an old scruffy techie. Mainly it will be articles about technology, software development, technical architecture, software methodologies and other topics that tech geeks enjoy.
 

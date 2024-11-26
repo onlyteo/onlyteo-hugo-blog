@@ -1,7 +1,9 @@
 ---
 name: Teo
-avatar: avatar.png
-tags: []
+avatar: /images/authors/onlyteo-80x80.png
+tags: [
+    "Developer"
+]
 socials:
   - name: Github
     weight: 1

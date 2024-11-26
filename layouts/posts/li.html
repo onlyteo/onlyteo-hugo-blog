@@ -3,28 +3,33 @@
 {{ $category := index (.Params.categories) 0 }}
 {{ $categoryPage := printf "/categories/%s" $category }}
 <li>
-  <div class="post full">
+  <div class="post detailed">
     <div class="post-title">
-      <a class="title" href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+      <h3 class="title">
+        <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+      </h3>
     </div>
-    <div class="post-meta spaced">
+    <div class="post-description">
+      <p>{{ .Description }}</p>
+    </div>
+    <div class="post-meta">
       {{ with .GetPage $categoryPage }}
-      <span class="post-category meta">
+      <div class="meta category">
         <a href="{{ .Permalink }}">
           <i class="fa-regular fa-folder"></i>{{ $category }}
         </a>
-      </span>
+      </div>
       {{ end }}
+      <div class="meta date">
+        <i class="fa-regular fa-calendar"></i>{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+      </div>
       {{ with .GetPage $authorPage }}
-      <span class="post-author meta">
+      <div class="meta author">
         <a href="{{ .Permalink }}">
           <i class="fa-regular fa-user"></i>{{ .Params.name }}
         </a>
-      </span>
+      </div>
       {{ end }}
-      <span class="post-date meta">
-        <i class="fa-regular fa-calendar"></i>{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
-      </span>
     </div>
   </div>
 </li>

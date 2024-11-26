@@ -5,11 +5,11 @@
 <section class="container author">
     <article>
         <header class="author-header">
-            <h2 class="author-name">
+            <h1 class="author-name">
                 <a class="author-link" href="{{ .Permalink | safeURL }}">
                     {{ .Params.name }}
                 </a>
-            </h2>
+            </h1>
         </header>
 
         <div class="author-content">
@@ -24,11 +24,11 @@
 
         <footer class="author-footer">
             <div class="author-posts list">
-                <h4>Latest posts</h4>
+                <h3>Latest posts</h3>
                 {{ with .GetPage "posts" }}
                 <ul>
                     {{ range last 5 .Pages }}
-                    {{- .Render "li-simple" -}}
+                    {{- .Render "li-compact" -}}
                     {{ end }}
                 </ul>
                 {{ end }}

@@ -1,5 +1,6 @@
 {{ with .Params.socials }}
-<div class="author-socials socials list">
+<div class="author-socials socials">
+    <div class="list">
     <ul>
   {{ range sort . "weight" }}
     {{ if .icon }}
@@ -15,5 +16,6 @@
         {{ end }}
       {{ end }}
     </ul>
+    </div>
 </div>
 {{ end }}

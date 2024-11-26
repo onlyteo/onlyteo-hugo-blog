@@ -1,14 +1,14 @@
----
-draft: true
-meta: true
-toc: false
-featured: false
-date: {{ .Date }}
-authors: []
-tags: []
-categories: []
-series: []
-title: ""
-description: ""
-slug: ""
----
++++
+title = ""
+description = ""
+slug = ""
+date = "{{ .Date }}"
+draft = true
+meta = true
+toc = false
+featured = false
+authors = []
+tags = []
+categories = []
+series = []
++++
