@@ -1,11 +1,12 @@
 +++
 title = "Welcome to the new onlyteo.com site!"
 description = "The first post on the new and improved website."
+date = "2023-10-01T19:24:46+02:00"
 draft = false
 meta = false
 toc = false
 featured = false
-date = "2023-10-01T19:24:46+02:00"
+unlisted = false
 authors = [
     "onlyteo"
 ]

@@ -1,5 +1,6 @@
 {{ with .GetPage "posts" }}
 {{ $posts := where .Pages "Params.featured" "ne" true }}
+{{ $posts := where $posts "Params.unlisted" "ne" true }}
 <div class="latest-posts list">
     <h1>Latest posts</h1>
     <ul>

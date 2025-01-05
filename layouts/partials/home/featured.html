@@ -1,5 +1,6 @@
 {{ with .GetPage "posts" }}
 {{ $posts := where .Pages "Params.featured" "eq" true }}
+{{ $posts := where $posts "Params.unlisted" "ne" true }}
 {{ if gt ( $posts | len ) 0 }}
 <div class="featured list">
     <h1>Featured</h1>

@@ -1,8 +1,8 @@
 +++
-title = ""
+title = "Free weight lifting routine"
 description = ""
 slug = ""
-date = "{{ .Date }}"
+date = "2024-12-18T14:17:26+01:00"
 draft = true
 meta = true
 toc = false
