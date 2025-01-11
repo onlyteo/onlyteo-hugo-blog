@@ -36,15 +36,19 @@ out with the minimal setup we will extend it with
 
 These features include:
 
-* Storing OAuth2 registered clients in a database
-* Storing OAuth2 authorized clients in a database
-* Storing OAuth2 consents in a database
-* Storing identity details in a database
-* Using external [RSA](https://datatracker.ietf.org/doc/html/rfc8017) keys for OAuth2 token signing
 * Requiring [Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
+* Storing user credentials in a database
+* Storing OAuth2 registered clients in a database
+* Storing OAuth2 authorizations in a database
+* Storing OAuth2 authorization consents in a database
+* Using external [RSA](https://datatracker.ietf.org/doc/html/rfc8017) keys for OAuth2 token signing
 
 This is the first of two posts. In this post we will set up a minimal skeleton of the needed applications. The 
-second part will describe how to extend the applications with the features described above. Stay tuned for Part 2!
+second part we describe how to extend the Authorization Server with the features described above.
+
+### Parts
+* Extending the Spring Authorization Server - Part 1 (this post)
+* Extending the Spring Authorization Server - Part 2 (coming soon!)
 
 ## Prerequisites
 
@@ -336,6 +340,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    // Security
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 }

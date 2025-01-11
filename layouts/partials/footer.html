@@ -1,5 +1,5 @@
 <footer class="footer">
-  <section class="container">
+  <section class="legal">
     {{ with .Site }} <a href="{{ absLangURL "" }}">{{ .Title }}</a> {{ end }}
     ©
     {{ if (and .Site.Params.since (lt .Site.Params.since now.Year)) }}

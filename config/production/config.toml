@@ -1,1 +1,5 @@
 baseURL = "https://onlyteo.com"
+
+# Use Google Tag Manager (https://analytics.google.com/) for analytics
+[params.googleTagManager]
+id = "G-V1RDG69332"
