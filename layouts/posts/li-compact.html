@@ -1,14 +1,16 @@
 {{ $mainAuthor := index (.Params.authors) 0 }}
 {{ $mainCategory := index (.Params.categories) 0 }}
 <li>
-    <div class="post compact">
-        <div class="post-title">
-            <h4 class="title">
+    <div class="post compact w-100 p-2 mb-2">
+        <div class="post-title fs-m m-0 float-start">
+            <h4 class="title m-0">
                 <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
             </h4>
         </div>
-        <div class="post-meta">
-            <div class="date meta">{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</div>
+        <div class="post-meta fs-s dimmed-text float-end">
+            <div class="meta date unset-all m-0 float-en">
+                <i class="fa-regular fa-calendar"></i>{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+            </div>
         </div>
     </div>
 </li>

@@ -3,28 +3,28 @@
 {{ $category := index (.Params.categories) 0 }}
 {{ $categoryPage := printf "/categories/%s" $category }}
 <li>
-  <div class="post detailed">
-    <div class="post-title">
+  <div class="post detailed w-100 p-2 mb-2">
+    <div class="post-title fs-m">
       <h3 class="title">
         <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
       </h3>
     </div>
-    <div class="post-description">
+    <div class="post-description fs-xs">
       <p>{{ .Description }}</p>
     </div>
-    <div class="post-meta">
+    <div class="post-meta fs-s">
       {{ with .GetPage $categoryPage }}
-      <div class="meta category">
+      <div class="meta category float-start">
         <a href="{{ .Permalink }}">
           <i class="fa-regular fa-folder"></i>{{ $category }}
         </a>
       </div>
       {{ end }}
-      <div class="meta date">
+      <div class="meta date unset-all dimmed-text m-0 float-end">
         <i class="fa-regular fa-calendar"></i>{{ .Date | time.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
       </div>
       {{ with .GetPage $authorPage }}
-      <div class="meta author">
+      <div class="meta author me-3 float-end">
         <a href="{{ .Permalink }}">
           <i class="fa-regular fa-user"></i>{{ .Params.name }}
         </a>

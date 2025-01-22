@@ -2,7 +2,7 @@
 {{ $posts := where .Pages "Params.featured" "eq" true }}
 {{ $posts := where $posts "Params.unlisted" "ne" true }}
 {{ if gt ( $posts | len ) 0 }}
-<div class="featured list">
+<div class="featured-posts list">
     <h1>Featured</h1>
     <ul>
         {{ range $index, $post := $posts }}

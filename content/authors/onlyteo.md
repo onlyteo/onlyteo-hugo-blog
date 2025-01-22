@@ -1,30 +1,34 @@
 ---
 name: Teo
-avatar: /images/authors/onlyteo-80x80.png
+avatar: /images/authors/onlyteo-100x100.png
 tags: [
     "Developer"
 ]
 socials:
-  - name: Github
-    weight: 1
-    icon: fa-brands fa-github
-    username: onlyteo
-    url: https://github.com/onlyteo
-  - name: Twitter
-    weight: 2
-    icon: fa-brands fa-twitter
-    username: "@onlyteo"
-    url: https://twitter.com/onlyteo
   - name: Bluesky
-    weight: 3
+    weight: 1
     icon: fa-brands fa-bluesky
-    username: "@onlyteo"
-    url: https://bsky.app/profile/onlyteo.bsky.social
+    username: "onlyteo.live"
+    target: "_blank"
+    url: https://bsky.app/profile/onlyteo.live
   - name: Mastodon
-    weight: 4
+    weight: 2
     icon: fa-brands fa-mastodon
     username: "@onlyteo"
+    target: "_blank"
     url: https://hachyderm.io/@onlyteo
+  - name: Twitter
+    weight: 3
+    icon: fa-brands fa-twitter
+    username: "onlyteo"
+    target: "_blank"
+    url: https://twitter.com/onlyteo
+  - name: Github
+    weight: 4
+    icon: fa-brands fa-github
+    username: onlyteo
+    target: "_blank"
+    url: https://github.com/onlyteo
 ---
 
 It's me, Teo. A scruffy tech nerd with a passion for software development, technology and science.

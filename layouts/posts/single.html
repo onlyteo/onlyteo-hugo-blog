@@ -1,35 +1,35 @@
 {{ define "title" }}
-  {{ .Title }} · {{ .Site.Title }}
+{{ .Title }} · {{ .Site.Title }}
 {{ end }}
 {{ define "content" }}
-  <section class="container post">
+<section class="container post">
     <article>
-      <header>
-        {{ partial "post/title.html" . }}
-        {{ partial "post/meta.html" . }}
-        {{ partial "post/toc.html" . }}
-      </header>
+        <header class="post-header">
+            {{ partial "post/title.html" . }}
+            {{ partial "post/meta.html" . }}
+            {{ partial "post/toc.html" . }}
+        </header>
 
-      <div class="post-content">
-        {{ if .Params.image }}
-          <img src="{{ .Params.image | relURL }}" alt="Featured Image"/>
-        {{ end }}
-        {{ .Content }}
-      </div>
+        <div class="post-content">
+            {{ if .Params.image }}
+            <img src="{{ .Params.image | relURL }}" alt="Featured Image"/>
+            {{ end }}
+            {{ .Content }}
+        </div>
 
 
-      <footer>
-        {{ partial "posts/series.html" . }}
-        {{ partial "posts/disqus.html" . }}
-        {{ partial "posts/commento.html" . }}
-        {{ partial "posts/utterances.html" . }}
-        {{ partial "posts/giscus.html" . }}
-        {{ partial "posts/mastodon.html" . }}
-        {{ partial "posts/telegram.html" . }}
-        {{ partial "posts/cusdis.html" . }}
-      </footer>
+        <footer class="post-footer">
+            {{ partial "posts/series.html" . }}
+            {{ partial "posts/disqus.html" . }}
+            {{ partial "posts/commento.html" . }}
+            {{ partial "posts/utterances.html" . }}
+            {{ partial "posts/giscus.html" . }}
+            {{ partial "posts/mastodon.html" . }}
+            {{ partial "posts/telegram.html" . }}
+            {{ partial "posts/cusdis.html" . }}
+        </footer>
     </article>
 
     {{ partial "posts/math.html" . }}
-  </section>
+</section>
 {{ end }}

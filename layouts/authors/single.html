@@ -12,17 +12,15 @@
             </h1>
         </header>
 
-        <div class="author-content">
+        <div class="author-content float-clear">
+            {{ partialCached "author/socials.html" . }}
+            {{ partialCached "author/avatar.html" . }}
             <div class="author-bio">
                 {{ .Content }}
             </div>
-            <div class="author-details">
-                {{ partialCached "author/avatar.html" . }}
-                {{ partialCached "author/socials.html" . }}
-            </div>
         </div>
 
-        <footer class="author-footer">
+        <footer class="author-footer float-clear">
             <div class="author-posts list">
                 <h3>Latest posts</h3>
                 {{ with .GetPage "posts" }}

@@ -29,8 +29,8 @@ rtl = false
 colorScheme = "auto"
 hideColorSchemeToggle = true
 maxSeeAlsoItems = 5
-customCSS = ["css/onlyteo.css"]
-customSCSS = []
+customCSS = []
+customSCSS = ["css/layout.scss", "css/overrides.scss"]
 customJS = []
 customRemoteJS = []
 

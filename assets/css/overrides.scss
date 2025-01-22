@@ -1,0 +1,125 @@
+@import "../scss/variables";
+
+// ---------- NAVIGATION ----------
+
+body.colorscheme-light .navigation a {
+  color: $fg-color;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-color;
+  }
+}
+
+body.colorscheme-dark .navigation a {
+  color: $fg-color-dark;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-color-dark;
+  }
+}
+
+body .navigation .navigation-title {
+  font-size: 3rem;
+  text-transform: none;
+}
+
+body .navigation #dark-mode-toggle {
+  margin: 0 1rem;
+  font-size: inherit;
+  bottom: auto;
+  left: auto;
+  z-index: auto;
+  position: absolute;
+}
+
+// ---------- CONTENT ----------
+
+body .content header {
+  margin-top: 4rem !important;
+  margin-bottom: 2rem !important;
+}
+
+body .content .list {
+  .title {
+    margin: 0;
+  }
+}
+
+body.colorscheme-light .dimmed-text {
+  color: $alt-fg-color;
+}
+
+body.colorscheme-dark .dimmed-text {
+  color: $alt-fg-color-dark;
+}
+
+body.colorscheme-light .content a {
+  color: $fg-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-color;
+  }
+}
+
+body.colorscheme-dark .content a {
+  color: $fg-color-dark;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-color-dark;
+  }
+}
+
+body.colorscheme-light .list .compact, body.colorscheme-light .list .detailed {
+  border: 1px solid $alt-bg-color;
+  border-radius: 0.4rem;
+}
+
+body.colorscheme-dark .list .compact, body.colorscheme-dark .list .detailed {
+  border: 1px solid $alt-bg-color-dark;
+  border-radius: 0.4rem;
+}
+
+body .author-content .author-socials ul {
+  float: right;
+}
+
+body .author-content .author-socials li {
+  display: inline;
+  float: left;
+}
+
+body .author-content .author-avatar img {
+  border-radius: 50% !important;
+}
+
+// ---------- FOOTER ----------
+
+body.colorscheme-light .footer a {
+  color: $fg-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-color;
+  }
+}
+
+body.colorscheme-dark .footer a {
+  color: $fg-color-dark;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-color-dark;
+  }
+}
