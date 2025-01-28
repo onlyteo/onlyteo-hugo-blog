@@ -36,17 +36,20 @@ out with the minimal setup we will extend it with
 
 These features include:
 
-* Requiring [Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
-* Storing user credentials in a database
-* Storing OAuth2 registered clients in a database
-* Storing OAuth2 authorizations in a database
-* Storing OAuth2 authorization consents in a database
-* Using external [RSA](https://datatracker.ietf.org/doc/html/rfc8017) keys for OAuth2 token signing
-
-This is the second of two posts. In the first part we create two skeleton applications. In this post we will extend
-upon what we did in part 1 and update the Authorization Server with the features described above. 
+* Part 1
+    * Allow users to register credentials
+* Post 2 (this post)
+    * Storing user credentials in a database
+    * Storing OAuth2 registered clients in a database
+    * Storing OAuth2 authorizations in a database
+    * Storing OAuth2 authorization consents in a database
+    * Requiring [Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
+    * Using external [RSA](https://datatracker.ietf.org/doc/html/rfc8017) keys for OAuth2 token signing
 
 ### Parts
+This is the second of two posts. In the first part we create two skeleton applications. In this post we will extend
+upon what we did in part 1 and update the Authorization Server with the features described above.
+
 * [Extending the Spring Authorization Server - Part 1](/posts/extending-the-spring-authorization-server-part-1)
 * Extending the Spring Authorization Server - Part 2 (this post)
 
@@ -57,51 +60,6 @@ upon what we did in part 1 and update the Authorization Server with the features
 
 We will implement the project using the [Kotlin](https://kotlinlang.org) programming language, configure the application
 using the Spring Boot framework, and use the [Gradle](https://gradle.org) build and dependency management tool.
-
-## Setting up database
-We need a persistent storage for many of the features. For that we will use a Docker powered PostgreSQL database.
-
-### Set up a PostgreSQL database with Docker
-In the root of the Authorization Server project create a `docker-compose.yaml` file with the contents:
-```yaml
-### SERVICES ###
-services:
-  postgres:
-    image: postgres
-    container_name: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: G4nd4lf
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./src/main/resources/db/init:/docker-entrypoint-initdb.d
-      - postgres.data:/var/lib/postgresql/data
-    networks:
-      - postgres
-
-### VOLUMES ###
-volumes:
-  postgres.data:
-    name: postgres.data
-
-### NETWORKS ###
-networks:
-  postgres:
-    name: postgres
-```
-
-Add `authorization_server.sql` database initialization script to the `/src/main/resources/db/init` path with the
-contents:
-```postgresql
-CREATE USER authorization_server WITH PASSWORD 'G4nd4lf';
-CREATE DATABASE authorization_server WITH OWNER authorization_server;
-```
-
-Start the PostgreSQL Docker container by running the following command from the Authorization Server project root:
-```shell
-docker compose up -d
-```
 
 ## Update Webapp with improved features
 In order for the Webapp to support the improvements to security features that we will implement in the Authorization 
@@ -249,14 +207,96 @@ dependencies {
 }
 ```
 
-Then we need the database model that will allow us to persist the necessary data to the database. The SQL 
+### Storing user credentials in a database
+User credentials are by default stored in memory through the use of the `InMemoryUserDetailsManager` which is used 
+if no other `UserDetailsManager` beans are present. We will override this behavior with the use of the 
+`JdbcUserDetailsManager` which store user credentials in a database.
+
+Now we need the database model that will allow us to persist the necessary data to the database. Create a 
+`V1__users.sql` SQL script file in the Flyway migration folder `/src/main/resources/db/migration` with the following 
+contents:
+```postgresql
+CREATE TABLE users
+(
+    username VARCHAR(50)  NOT NULL PRIMARY KEY,
+    password VARCHAR(500) NOT NULL,
+    enabled  BOOLEAN      NOT NULL
+);
+
+CREATE TABLE authorities
+(
+    username  VARCHAR(50) NOT NULL,
+    authority VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users (username),
+    CONSTRAINT uc_username_authority UNIQUE (username, authority)
+);
+```
+
+The data model is based on the [users.ddl](https://github.com/spring-projects/spring-security/blob/main/core/src/main/resources/org/springframework/security/core/userdetails/jdbc/users.ddl)
+DDL file supplied with the [spring-security-core](https://github.com/spring-projects/spring-security/tree/main/core)
+module.
+
+### Storing OAuth2 registered clients in a database
+
+
+* [oauth2-registered-client-schema.sql](https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql)
+
+### Storing OAuth2 authorizations in a database
 scripts required to create the database model are supplied by Spring. We will download them from the GitHub project
 for the Spring Authorization Server and save them to the Flyway migration folder `/src/main/resources/db/migration`.
 
-We will download the following files:
 * [oauth2-authorization-schema.sql](https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql)
-* [oauth2-authorization-consent-schema.sql](https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-consent-schema.sql)
-* [oauth2-registered-client-schema.sql](https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql)
 
-If we look at the comment in the `oauth2-authorization-schema.sql` we see that we need to modify the file, replacing 
+If we look at the comment in the `oauth2-authorization-schema.sql` we see that we need to modify the file, replacing
 the use of `blob` with the `text` datatype since we are using PostgreSQL.
+
+### Storing OAuth2 authorization consents in a database
+
+* [oauth2-authorization-consent-schema.sql](https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-consent-schema.sql)
+
+## Setting up database
+We need a persistent storage for many of the features. For that we will use a Docker powered PostgreSQL database.
+
+### Set up a PostgreSQL database with Docker
+In the root of the Authorization Server project create a `docker-compose.yaml` file with the contents:
+```yaml
+### SERVICES ###
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: G4nd4lf
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/main/resources/db/init:/docker-entrypoint-initdb.d
+      - postgres.data:/var/lib/postgresql/data
+    networks:
+      - postgres
+
+### VOLUMES ###
+volumes:
+  postgres.data:
+    name: postgres.data
+
+### NETWORKS ###
+networks:
+  postgres:
+    name: postgres
+```
+
+Add `authorization_server.sql` database initialization script to the `/src/main/resources/db/init` path with the
+contents:
+```postgresql
+CREATE USER authorization_server WITH PASSWORD 'G4nd4lf';
+CREATE DATABASE authorization_server WITH OWNER authorization_server;
+```
+
+Start the PostgreSQL Docker container by running the following command from the Authorization Server project root:
+```shell
+docker compose up -d
+```
+
+## Test the complete login flow
