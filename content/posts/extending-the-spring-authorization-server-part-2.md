@@ -47,8 +47,10 @@ These features include:
     * Using external [RSA](https://datatracker.ietf.org/doc/html/rfc8017) keys for OAuth2 token signing
 
 ### Parts
-This is the second of two posts. In the first part we create two skeleton applications. In this post we will extend
-upon what we did in part 1 and update the Authorization Server with the features described above.
+This is the second of two posts. In the first part we will set up a minimal skeleton of the needed applications. We
+also made it possible to register as a user. By default, any data stored will only live in memory, and will be lost
+when the application is stopped. In this post we describe how to extend the Authorization Server with the rest
+of the features described above, such as persistent storage.
 
 * [Extending the Spring Authorization Server - Part 1](/posts/extending-the-spring-authorization-server-part-1)
 * Extending the Spring Authorization Server - Part 2 (this post)
@@ -63,24 +65,79 @@ using the Spring Boot framework, and use the [Gradle](https://gradle.org) build 
 
 ## Update Webapp with improved features
 In order for the Webapp to support the improvements to security features that we will implement in the Authorization 
-Server it must also be updated with a few features. Pure property driven configuration is not sufficient to enable 
-these features. We must update the default Spring configuration by overriding a few Spring beans and configuration 
-classes.
+Server it must also be updated with a few features. Currently pure property driven configuration is not sufficient to 
+enable these features. We must update the default Spring configuration by overriding a few Spring beans and
+configuration classes.
 
 ### Enable PKCE and OIDC logout support
 The Authorization Server will be updated so that all OAuth2 clients are required to use PKCE together with the 
 Authorization Code flow. Therefor PKCE must also be enabled in the Webapp. We must also enable a complete OIDC 
 logout flow. This will ensure that logout will clear the session both in the Webapp and in the Authorization Server.
 
-First we add a configuration bean to the `com.onlyteo.sandbox.config` package, that will hold all the necessary
-configuration overrides:
+We add a `WebSecurityConfig` bean into the `/src/main/kotlin/` path under `com.onlyteo.sandbox.config` package.
+
 ```kotlin
 @Configuration(proxyBeanMethods = false)
 class WebSecurityConfig {
 }
 ```
 
-The project will now look like this:
+To enable the OIDC logout feature we add the following bean factory function to the `WebSecurityConfig` class:
+
+```kotlin
+@Bean
+fun logoutSuccessHandler(
+    clientRegistrationRepository: ClientRegistrationRepository
+): LogoutSuccessHandler {
+    return OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository)
+}
+```
+
+To enable the PKCE feature we add the following bean factory function to the `WebSecurityConfig` class:
+
+```kotlin
+@Bean
+fun oAuth2AuthorizationRequestResolver(
+    clientRegistrationRepository: ClientRegistrationRepository
+): OAuth2AuthorizationRequestResolver {
+    return DefaultOAuth2AuthorizationRequestResolver(
+        clientRegistrationRepository,
+        DEFAULT_AUTHORIZATION_REQUEST_BASE_URI
+    ).apply {
+        setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce()) // Enables PKCE
+    }
+}
+```
+
+This all comes together in a `webSecurityFilterChain` factory function like this:
+
+```kotlin
+@Bean
+@Throws(Exception::class)
+fun webSecurityFilterChain(
+    http: HttpSecurity,
+    oAuth2AuthorizationRequestResolver: OAuth2AuthorizationRequestResolver,
+    logoutSuccessHandler: LogoutSuccessHandler
+): SecurityFilterChain {
+    return http
+        .authorizeHttpRequests {
+            it.requestMatchers("/assets/**", "/error").permitAll()
+                .anyRequest().authenticated()
+        }
+        .oauth2Login {
+            it.authorizationEndpoint { auth ->
+                auth.authorizationRequestResolver(oAuth2AuthorizationRequestResolver)
+            }
+        }
+        .logout {
+            it.logoutSuccessHandler(logoutSuccessHandler)
+        }
+        .build()
+}
+```
+
+With this in place the project will now look like this:
+
 ```diff
 ▼ spring-oauth2-webapp
    ⯈ gradle
@@ -103,60 +160,6 @@ The project will now look like this:
    settings.gradle.kts
 ```
 
-To enable the OIDC logout feature we add the following bean factory method to the `WebSecurityConfig` class:
-```kotlin
-@Bean
-fun logoutSuccessHandler(
-    clientRegistrationRepository: ClientRegistrationRepository
-): LogoutSuccessHandler {
-    return OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository)
-}
-```
-
-To enable the PKCE feature we add the following bean factory method to the `WebSecurityConfig` class:
-```kotlin
-@Bean
-fun oAuth2AuthorizationRequestResolver(
-    clientRegistrationRepository: ClientRegistrationRepository
-): OAuth2AuthorizationRequestResolver {
-    return DefaultOAuth2AuthorizationRequestResolver(
-        clientRegistrationRepository,
-        DEFAULT_AUTHORIZATION_REQUEST_BASE_URI
-    ).apply {
-        setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce()) // Enables PKCE
-    }
-}
-```
-
-This all comes together in a `SecurityFilterChain` like this:
-```kotlin
-@Bean
-@Throws(Exception::class)
-fun webSecurityFilterChain(
-    http: HttpSecurity,
-    oAuth2AuthorizationRequestResolver: OAuth2AuthorizationRequestResolver,
-    logoutSuccessHandler: LogoutSuccessHandler
-): SecurityFilterChain {
-    return http
-        .authorizeHttpRequests { config ->
-            config
-                .requestMatchers("/assets/**", "/error").permitAll()
-                .anyRequest().authenticated()
-        }
-        .oauth2Login { config ->
-            config
-                .authorizationEndpoint { auth ->
-                    auth.authorizationRequestResolver(oAuth2AuthorizationRequestResolver)
-                }
-        }
-        .logout { config ->
-            config
-                .logoutSuccessHandler(logoutSuccessHandler)
-        }
-        .build()
-}
-```
-
 This concludes the necessary changes for the Webapp. Let's move on to the Authorization Server.
 
 ## Update Authorization Server with improved features
@@ -164,7 +167,8 @@ We are now ready to implement the improved security features in the Authorizatio
 
 ### Enable PKCE for all OAuth2 clients
 Enabling PKCE in the Authorization Server is very easy. It is a simple matter of adding the property 
-`require-proof-key: true`:
+`require-proof-key: true` to the `application.yaml` file:
+
 ```yaml
 ### SPRING ###
 spring:
@@ -195,26 +199,44 @@ spring:
 ### Add persistence dependencies
 We need to add necessary dependencies to the Authorization Server `build.gradle.kts` file. We need Spring Boot 
 JDBC support, PostgreSQL JDBC driver and Flyway database migration framework.
+
 ```kotlin
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
     // Persistence
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.postgresql:postgresql")
-    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
 }
 ```
+
+With that in place we are ready to persist data.
 
 ### Storing user credentials in a database
 User credentials are by default stored in memory through the use of the `InMemoryUserDetailsManager` which is used 
 if no other `UserDetailsManager` beans are present. We will override this behavior with the use of the 
 `JdbcUserDetailsManager` which store user credentials in a database.
 
+We update the `WebSecurityConfig` configuration bean in the `com.onlyteo.sandbox.config` package by adding a 
+factory function for the `JdbcUserDetailsManager`:
+
+```kotlin
+@Bean
+fun userDetailsManager(jdbcTemplate: JdbcTemplate): UserDetailsManager {
+  return JdbcUserDetailsManager()
+    .apply { setJdbcTemplate(jdbcTemplate) }
+}
+```
+
 Now we need the database model that will allow us to persist the necessary data to the database. Create a 
 `V1__users.sql` SQL script file in the Flyway migration folder `/src/main/resources/db/migration` with the following 
 contents:
+
 ```postgresql
 CREATE TABLE users
 (
@@ -233,7 +255,7 @@ CREATE TABLE authorities
 ```
 
 The data model is based on the [users.ddl](https://github.com/spring-projects/spring-security/blob/main/core/src/main/resources/org/springframework/security/core/userdetails/jdbc/users.ddl)
-DDL file supplied with the [spring-security-core](https://github.com/spring-projects/spring-security/tree/main/core)
+file supplied with the [spring-security-core](https://github.com/spring-projects/spring-security/tree/main/core)
 module.
 
 ### Storing OAuth2 registered clients in a database
@@ -259,6 +281,7 @@ We need a persistent storage for many of the features. For that we will use a Do
 
 ### Set up a PostgreSQL database with Docker
 In the root of the Authorization Server project create a `docker-compose.yaml` file with the contents:
+
 ```yaml
 ### SERVICES ###
 services:
@@ -289,6 +312,7 @@ networks:
 
 Add `authorization_server.sql` database initialization script to the `/src/main/resources/db/init` path with the
 contents:
+
 ```postgresql
 CREATE USER authorization_server WITH PASSWORD 'G4nd4lf';
 CREATE DATABASE authorization_server WITH OWNER authorization_server;

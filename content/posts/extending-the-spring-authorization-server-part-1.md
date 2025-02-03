@@ -197,7 +197,7 @@ contents:
         <h5 class="m-0">Spring OAuth2 Webapp</h5>
     </header>
     <section class="px-5 py-4">
-        <p>You are logged in as <b>onlyteo</b></p>
+        <p>You are logged in as <b sec:authentication="name"></b></p>
     </section>
 </main>
 </body>
@@ -345,6 +345,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration(proxyBeanMethods = false)
 class WebSecurityConfig {
 
+    @Order(2) // Must be before authorizationServerSecurityFilterChain
     @Bean
     fun webSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
@@ -369,8 +370,51 @@ The configuration bean has a factory function for a `SecurityFilterChain` bean. 
 specify that the `/register` and `/error` paths should not be secured. We also instructs Spring Security to protect 
 the rest of the application with a form login, whose login page will be located at the `/login` path.
 
-There is also a factory function for a `PasswordEncoder` bean. It will be used to encode passwords that the 
+There is also a factory function for a `PasswordEncoder` bean. It will be used to encode passwords that the
 users inputs during the registration process.
+
+Since we are overriding the security filter chain for the authentication flow it fully disables the 
+Spring Boot autoconfiguration for the authorization server. We must therefor also add a security filter chain 
+for the authorization server OAuth2/OIDC protocol endpoints. We add a `AuthorizationServerConfig` bean into the
+`/src/main/kotlin/` path under `com.onlyteo.sandbox.config` package with the following contents:
+
+```kotlin
+package com.onlyteo.sandbox.config
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
+import org.springframework.http.MediaType
+import org.springframework.security.config.Customizer
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
+import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher
+
+@Configuration(proxyBeanMethods = false)
+class AuthorizationServerConfig {
+
+    @Order(1) // Must be after webSecurityFilterChain
+    @Bean
+    fun authorizationServerSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        val configurer = OAuth2AuthorizationServerConfigurer
+            .authorizationServer()
+            .oidc(Customizer.withDefaults()) // Enable OpenID Connect 1.0
+        return http
+            .securityMatcher(configurer.endpointsMatcher)
+            .with(configurer, Customizer.withDefaults())
+            .authorizeHttpRequests { it.anyRequest().authenticated() }
+            .exceptionHandling {
+                it.defaultAuthenticationEntryPointFor(
+                    LoginUrlAuthenticationEntryPoint("/login"),
+                    MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                )
+            }
+            .build()
+    }
+}
+```
 
 For the user registration page we need a value object to hold the user supplied credentials. We add a 
 `RegisterFormData` data class into the `/src/main/kotlin/` path under `com.onlyteo.sandbox.model` package with the 
@@ -570,6 +614,7 @@ With all this in place the project should look like this:
                ▼ onlyteo
                   ▼ sandbox
                      ▼ config
+                        AuthorizationServerConfig
                         WebSecurityConfig.kt
                      ▼ controller
                         ViewController.kt
